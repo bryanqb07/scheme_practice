@@ -1,0 +1,3 @@
+(define (ps set)
+  (if (null? set) `(())
+      (append (map (cons (car seq) ps(cdr set))) (ps (cdr set)))))

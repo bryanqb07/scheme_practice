@@ -1,0 +1,2 @@
+(define (translate points delta)
+  (map (apply (+ delta)) points))
