@@ -32,4 +32,32 @@
        (cmp (car seq) (cadr seq))
        (is-up-down? (cdr seq) (cmp-flip cmp))))) 
 
-(define (up-down-permute x) "hello")
+(define (up-down-permute seq) 
+  (cond ((null? seq) `())
+	((= (length seq) 1) seq)
+	(else (map
+	       (lambda (ele)
+		 (map (lambda (permutation)
+		   (if 
+		    (and (is-up-down? permutation >) (< ele (car permutation)))
+		       (cons ele permutation) `()))
+		   (down-up-permute (my-remove seq ele))))
+	       seq))))
+
+
+(define (down-up-permute seq) 
+  (cond ((null? seq) `())
+	((= (length seq) 1) seq)
+	(else (map
+	       (lambda (ele)
+		 (map (lambda (permutation)
+		   (if 
+		    (and (is-up-down? permutation <) (> ele (car permutation)))
+			(cons ele permutation) `()))
+		      (up-down-permute (my-remove seq ele))))
+	       seq))))
+
+
+
+
+
