@@ -1,0 +1,7 @@
+(load "is-up-down".scm)
+(is-up-down? `() <)
+(is-up-down? `(1) <)
+(is-up-down? `(1 2 3 4) <)
+(is-up-down? `(1 6 2 4 3 5) <)
+(is-up-down? `(1 6 2 4 3 5) >)
+(is-up-down? `(4 8 3 5 1 7 5 2) <)
