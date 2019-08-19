@@ -1,0 +1,6 @@
+(define (permute items)
+  (apply append
+	 (map (lambda (elem)
+		(map (lambda (powerset)
+		       (cons elem powerset)  
+	  items))))

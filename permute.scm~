@@ -1,0 +1,2 @@
+(define (permute items)
+  (apply append

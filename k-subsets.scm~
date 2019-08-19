@@ -1,0 +1,5 @@
+(define (k-subsets set k)
+  (if (= 0 k) `(())
+      (if (= 1 k) (map (lambda (x) `(x)) set)
+	  `("start recursion"))))
+       
