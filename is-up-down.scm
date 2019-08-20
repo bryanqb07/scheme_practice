@@ -27,35 +27,33 @@
   (if (eq? cmp >) < >))
 
 (define (is-up-down? seq cmp)
-  (if (or (<= (length seq) 1) (null? seq)) #t
+  (if (or (null? seq) (<= (length seq) 1)) #t
       (and 
        (cmp (car seq) (cadr seq))
        (is-up-down? (cdr seq) (cmp-flip cmp))))) 
 
+(define (permute-generator cmp inverted-permute seq)
+  (lambda (ele)
+    (apply append
+	   (map (lambda (permutation)
+		  (if (cmp ele (car permutation))
+		      (list (cons ele permutation))
+		      `()))
+		  (inverted-permute(my-remove seq ele))))))
+
+
 (define (up-down-permute seq) 
-  (cond ((null? seq) `())
-	((= (length seq) 1) seq)
-	(else (map
-	       (lambda (ele)
-		 (map (lambda (permutation)
-		   (if 
-		    (and (is-up-down? permutation >) (< ele (car permutation)))
-		       (cons ele permutation) `()))
-		   (down-up-permute (my-remove seq ele))))
-	       seq))))
+  (if (<= (length seq) 1) (list seq)
+	 (apply append
+		(map (permute-generator < down-up-permute seq) seq))))
 
 
 (define (down-up-permute seq) 
-  (cond ((null? seq) `())
-	((= (length seq) 1) seq)
-	(else (map
-	       (lambda (ele)
-		 (map (lambda (permutation)
-		   (if 
-		    (and (is-up-down? permutation <) (> ele (car permutation)))
-			(cons ele permutation) `()))
-		      (up-down-permute (my-remove seq ele))))
-	       seq))))
+  (if (<= (length seq) 1) (list seq)
+	 (apply append
+		(map (permute-generator > up-down-permute seq) seq))))
+
+
 
 
 
